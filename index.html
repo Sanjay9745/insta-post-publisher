@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GET Request Forms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .form-card {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .form-card h3 {
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function sendGetRequest(url, params) {
+            const queryString = new URLSearchParams(params).toString();
+            fetch(`${url}?${queryString}`)
+                .then(response => response.json())
+                .then(data => {
+                   
+                })
+                .catch(error => {
+                   
+                });
+        }
+
+        function handleSubmit(event, url) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const params = Object.fromEntries(formData.entries());
+            sendGetRequest(url, params);
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Form 1: Upload Directory -->
+    <div class="form-card">
+        <h3>Upload Directory</h3>
+        <form onsubmit="handleSubmit(event, 'http://localhost:3000/upload-directory')">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="text" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="dpath">Directory Path</label>
+                <input type="text" id="dpath" name="dpath" value="output" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- Form 2: Rename Files -->
+    <div class="form-card">
+        <h3>Rename Files</h3>
+        <form onsubmit="handleSubmit(event, 'http://localhost:3000/rename-files')">
+            <div class="form-group">
+                <label for="dpath_rename">Directory Path</label>
+                <input type="text" id="dpath_rename" name="dpath" value="output" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- Form 3: Add Watermark -->
+    <div class="form-card">
+        <h3>Add Watermark</h3>
+        <form onsubmit="handleSubmit(event, 'http://localhost:3000/add-watermark')">
+            <div class="form-group">
+                <label for="dpath_watermark">Directory Path</label>
+                <input type="text" id="dpath_watermark" name="dpath" value="input" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+</body>
+</html>
